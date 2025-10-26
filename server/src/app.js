@@ -5,7 +5,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"], // Add both Vite ports
+    origin: "*", 
     credentials: true, // Allow cookies
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
