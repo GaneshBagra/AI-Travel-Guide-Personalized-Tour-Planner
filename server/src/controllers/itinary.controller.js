@@ -1,6 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { GoogleGenAI, Type } from "@google/genai";
+import { getForecastForDate, getImageFromUnsplash } from "../utils/weatherAPi.service.js";
 
 const ai = new GoogleGenAI({});
 
@@ -46,8 +47,7 @@ const getItinaryResult = asyncHandler(async (req, res) => {
   res.setHeader('Connection', 'keep-alive');
 
   try {
-    // Use generateContentStream for streaming
-    const streamResponse = await ai.models.generateContentStream({
+    const aiResponse = await ai.models.generateContent({
       model: "gemini-2.5-pro",
       contents: `You are a travel planner. Create a day-by-day itinerary for a trip with the following details:
 - Destination: ${destination}
@@ -139,31 +139,49 @@ Return only valid JSON. Do not include any extra commentary or markdown. The JSO
       },
     });
 
-    let fullText = "";
+    let fullText = aiResponse?.text || aiResponse?.output_text || JSON.stringify(aiResponse);
+    const parsedData = JSON.parse(fullText);
 
-    // Stream chunks to client
-    for await (const chunk of streamResponse) {
-      const chunkText = chunk.text;
-      fullText += chunkText;
-      
-      // Send as SSE event
-      res.write(`data: ${JSON.stringify({ chunk: chunkText })}\n\n`);
-    }
+    const daysWithExtras = await Promise.all(
+      parsedData.days.map(async (day) => {
+        const targetDate = day.date;
 
-    // Send final complete JSON
-    try {
-      const parsedData = JSON.parse(fullText);
-      res.write(`data: ${JSON.stringify({ done: true, data: parsedData })}\n\n`);
-    } catch (error) {
-      res.write(`data: ${JSON.stringify({ error: "Invalid JSON from AI" })}\n\n`);
-    }
+        // Enrich each activity: image + weather for its time
+        const activities = await Promise.all(
+          (day.activities || []).map(async (act) => {
+            const placeQuery = act.placeName || act.title || parsedData.destination;
+            const [img, actWeather] = await Promise.all([
+              getImageFromUnsplash(placeQuery).catch(() => null),
+              getForecastForDate(placeQuery, targetDate, act.time).catch(() => null)
+            ]);
 
-    res.end();
+            return {
+              ...act,
+              PublicImageURL: img || act.PublicImageURL || null,
+              weather: actWeather || { note: "Weather unavailable for activity time" }
+            };
+          })
+        );
+
+        // Optionally keep day-level weather as well
+        const dayPlaceQuery = (day.activities && day.activities[0]?.placeName) || parsedData.destination;
+        const dayWeather = await getForecastForDate(dayPlaceQuery, targetDate).catch(() => null);
+
+        return {
+          ...day,
+          activities,
+          placeQueried: dayPlaceQuery,
+          weather: dayWeather || { note: "Weather unavailable or date out of range" }
+        };
+      })
+    );
+
+    const finalData = { ...parsedData, days: daysWithExtras };
+    res.status(200).json({ done: true, data: finalData });
 
   } catch (error) {
-    console.error("Streaming error:", error);
-    res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
-    res.end();
+    console.error("Itinerary error:", error);
+    res.status(500).json({ error: String(error.message || error) });
   }
 });
 
