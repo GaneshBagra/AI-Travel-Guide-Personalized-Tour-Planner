@@ -5,7 +5,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: "*", 
+    origin: ["http://localhost:5173", "https://ai-travel-app-bmgug.ondigitalocean.app"], 
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
