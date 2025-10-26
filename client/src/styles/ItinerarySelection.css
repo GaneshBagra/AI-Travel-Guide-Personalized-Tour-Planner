@@ -1,0 +1,478 @@
+.itinerary-page {
+  min-height: calc(100vh - 70px);
+  background: linear-gradient(to bottom, #f8f9ff, #fff);
+  padding: 40px 0;
+}
+
+/* Loading State */
+.loading-container {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.loading-animation {
+  position: relative;
+  height: 200px;
+  margin-bottom: 40px;
+}
+
+.plane {
+  font-size: 60px;
+  animation: fly 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes fly {
+  0%, 100% {
+    transform: translateX(-100px) translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(100px) translateY(-30px) rotate(5deg);
+  }
+}
+
+.clouds {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 60px;
+}
+
+.cloud {
+  font-size: 40px;
+  animation: float 4s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.cloud:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.cloud:nth-child(3) {
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.loading-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.loading-subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.loading-steps {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+}
+
+.step.active {
+  opacity: 1;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.step-icon {
+  font-size: 36px;
+}
+
+.step-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Error State */
+.error-container {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.error-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  font-size: 18px;
+  color: #666;
+  margin: 20px 0 40px;
+}
+
+/* Itinerary Display */
+.itinerary-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.itinerary-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.itinerary-summary {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.8;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.days-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.day-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.day-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.day-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.day-date {
+  font-size: 18px;
+  font-weight: 500;
+  color: #667eea;
+  display: block;
+}
+
+.day-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #f0f3ff;
+  border-radius: 8px;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.day-weather {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea15, #764ba215);
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.weather-icon-large img {
+  width: 64px;
+  height: 64px;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weather-condition {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.weather-temp {
+  font-size: 24px;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.activity-card {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  background: #f8f9ff;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.activity-card:hover {
+  background: #f0f3ff;
+  transform: translateX(8px);
+}
+
+.activity-image {
+  flex-shrink: 0;
+  width: 200px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.activity-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.activity-time,
+.activity-duration {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #667eea;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.activity-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.activity-place {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.activity-notes {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.activity-weather {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: white;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.activity-weather .temp {
+  font-weight: 700;
+  color: #667eea;
+}
+
+.weather-icon-small {
+  width: 24px;
+  height: 24px;
+}
+
+.day-safety {
+  padding: 16px;
+  background: #fff3cd;
+  border-left: 4px solid #ff9800;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.day-safety .icon {
+  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.explanation-section {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.explanation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.explanation-list li {
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #f8f9ff;
+  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.action-buttons {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .itinerary-title {
+    font-size: 32px;
+    flex-direction: column;
+  }
+
+  .day-title {
+    font-size: 24px;
+  }
+
+  .day-header {
+    flex-direction: column;
+  }
+
+  .activity-card {
+    flex-direction: column;
+  }
+
+  .activity-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .loading-title {
+    font-size: 24px;
+  }
+
+  .loading-steps {
+    gap: 20px;
+  }
+
+  .step-icon {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .itinerary-page {
+    padding: 20px 0;
+  }
+
+  .day-card {
+    padding: 24px 16px;
+  }
+
+  .activity-card {
+    padding: 16px;
+  }
+
+  .explanation-section {
+    padding: 24px 16px;
+  }
+}
