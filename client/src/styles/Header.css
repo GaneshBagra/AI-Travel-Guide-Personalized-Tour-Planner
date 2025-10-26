@@ -42,6 +42,14 @@
 .auth-buttons {
   display: flex;
   gap: 12px;
+  align-items: center;
+}
+
+.user-name {
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 10px;
 }
 
 .btn-auth {
@@ -52,6 +60,8 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .btn-login {
@@ -74,13 +84,52 @@
   box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
 }
 
+.btn-saved {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.btn-saved:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.btn-logout {
+  background: rgba(255, 59, 48, 0.9);
+  color: white;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 59, 48, 1);
+  transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
   .brand-name {
     font-size: 22px;
   }
 
+  .user-name {
+    display: none;
+  }
+
   .btn-auth {
     padding: 8px 16px;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-buttons {
+    gap: 8px;
+  }
+
+  .btn-auth {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .btn-saved {
+    display: none;
   }
 }

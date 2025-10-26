@@ -83,6 +83,11 @@ const itinerarySlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+    setItineraryData: (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -102,5 +107,5 @@ const itinerarySlice = createSlice({
   },
 });
 
-export const { clearItinerary, clearError } = itinerarySlice.actions;
+export const { clearItinerary, clearError, setItineraryData } = itinerarySlice.actions;
 export default itinerarySlice.reducer;

@@ -1,12 +1,18 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import type { RootState } from '../store/store';
+import type { RootState, AppDispatch } from '../store/store';
+import { saveItinerary, clearSaveSuccess } from '../store/savedItinerariesSlice';
 import '../styles/ItinerarySelection.css';
 
 const ItinerarySelection = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error } = useSelector((state: RootState) => state.itinerary);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { formData } = useSelector((state: RootState) => state.form);
+  const { loading: saving, saveSuccess } = useSelector((state: RootState) => state.savedItineraries);
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
   useEffect(() => {
     // If no loading state and no data, redirect to home
@@ -14,6 +20,37 @@ const ItinerarySelection = () => {
       navigate('/');
     }
   }, [loading, data, error, navigate]);
+
+  useEffect(() => {
+    if (saveSuccess) {
+      setShowSaveSuccess(true);
+      setTimeout(() => {
+        setShowSaveSuccess(false);
+        dispatch(clearSaveSuccess());
+      }, 3000);
+    }
+  }, [saveSuccess, dispatch]);
+
+  const handleSaveItinerary = async () => {
+    // Check if user is logged in
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
+    // Check if form data exists
+    if (!formData) {
+      alert('No itinerary data to save');
+      return;
+    }
+
+    try {
+      await dispatch(saveItinerary(formData)).unwrap();
+    } catch (err) {
+      console.error('Failed to save itinerary:', err);
+      alert('Failed to save itinerary. Please try again.');
+    }
+  };
 
   if (error) {
     return (
@@ -205,10 +242,29 @@ const ItinerarySelection = () => {
           <button className="btn-secondary" onClick={() => navigate('/')}>
             Plan Another Trip
           </button>
-          <button className="btn btn-outline-success " onClick={() => navigate('/')}>
-            Save Itinary
+          <button 
+            className="btn btn-success" 
+            onClick={handleSaveItinerary}
+            disabled={saving}
+          >
+            {saving ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Saving...
+              </>
+            ) : (
+              <>
+                {showSaveSuccess ? '✓ Saved!' : 'Save Itinerary'}
+              </>
+            )}
           </button>
         </div>
+
+        {showSaveSuccess && (
+          <div className="alert alert-success mt-3 text-center" role="alert">
+            Itinerary saved successfully! View it in <a href="/saved-itineraries" className="alert-link">Saved Itineraries</a>.
+          </div>
+        )}
         
       </div>
     </div>

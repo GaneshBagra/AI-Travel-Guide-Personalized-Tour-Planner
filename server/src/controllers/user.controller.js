@@ -41,7 +41,7 @@ const resgisterUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(
       409,
-      `User with email or username is already registered`
+      `User with email is already registered`
     );
   }
 

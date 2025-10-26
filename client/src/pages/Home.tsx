@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../store/store';
 import { generateItinerary } from '../store/itinerarySlice';
+import { setFormData } from '../store/formSlice';
 import '../styles/Home.css';
 
 const Home = () => {
@@ -21,6 +22,8 @@ const Home = () => {
     const startDate = formData.get('start_date');
     const endDate = formData.get('end_date');
     const interests = formData.get('intrests');
+    const travellers = formData.get('travellers');
+    const budget = formData.get('budget');
 
     if (!destination || !startDate || !endDate || !interests) {
       setFormErrors('Please fill in all required fields');
@@ -34,6 +37,16 @@ const Home = () => {
       setFormErrors('End date must be after start date');
       return;
     }
+
+    // Store form data in Redux for later use (saving itinerary)
+    dispatch(setFormData({
+      destination: destination as string,
+      start_date: startDate as string,
+      end_date: endDate as string,
+      intrests: interests as string,
+      travellers: travellers as string || '',
+      budget: budget as string || '',
+    }));
 
     // Navigate to loading page and dispatch async action
     navigate('/guide/itinary-selection');

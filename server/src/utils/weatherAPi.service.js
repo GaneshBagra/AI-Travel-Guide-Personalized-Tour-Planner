@@ -23,7 +23,6 @@ export async function getForecastForDate(location, dateIso) {
 
   const targetDate = normalizeToYMD(dateIso);
   const forecastDays = data.forecast?.forecastday || [];
-  console.debug("WeatherAPI: requested=", dateIso, "normalized=", targetDate, "available=", forecastDays.map(f => f.date));
 
   let day = forecastDays.find((d) => d.date === targetDate);
   if (!day && targetDate) {
