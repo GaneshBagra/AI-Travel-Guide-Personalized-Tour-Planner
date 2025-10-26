@@ -41,11 +41,13 @@ const initialState: ItineraryState = {
   error: null,
 };
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api/v1';
+
 export const generateItinerary = createAsyncThunk(
   'itinerary/generate',
   async (formData: FormData, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:4000/api/v1/ai/generate-response', {
+      const response = await fetch(`${API_BASE_URL}/ai/generate-response`, {
         method: 'POST',
         body: formData,
       });

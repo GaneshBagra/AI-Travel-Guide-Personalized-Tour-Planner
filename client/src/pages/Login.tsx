@@ -51,7 +51,7 @@ function Login() {
 
           {error && (
             <div className="alert alert-danger" role="alert">
-              {error.message}
+              {error}
             </div>
           )}
 
@@ -100,6 +100,7 @@ function Login() {
 
           <div className="auth-footer">
             <p>Don't have an account? <Link to="/register">Sign up</Link></p>
+            <p>Don't want to save Itinaries <Link to="/">Home</Link></p>
           </div>
         </div>
       </div>
