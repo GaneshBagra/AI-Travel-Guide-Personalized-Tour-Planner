@@ -1,16 +1,21 @@
-import  {model,schema} from "mongoose"
+import { Schema } from "mongoose"
+import mongoose  from "mongoose"
 
-const itinerarySchema = new schema({
+const itinerarySchema = new mongoose.Schema({
+    itinaryOwner : {
+        type : Schema.Types.ObjectId,
+        ref : "User"
+    },
     destination: {
         type: String,
         required: true
     },
     start_date: {
-        type: Date,
+        type: String,
         required: true
     },
     end_date :{
-        type: Date,
+        type: String,
         required: true
     },
     intrests: {
@@ -18,7 +23,7 @@ const itinerarySchema = new schema({
         required: true
     },
     travellers: {
-        type: string,
+        type: String,
         required: false
     },
     budget: {
@@ -27,4 +32,4 @@ const itinerarySchema = new schema({
     }
 }, {timestamps: true})
 
-export const Itinerary = model("Itinerary", itinerarySchema)
+export const Itinary = mongoose.model("Itinary", itinerarySchema)

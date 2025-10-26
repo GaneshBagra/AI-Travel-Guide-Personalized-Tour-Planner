@@ -1,7 +1,9 @@
 import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { GoogleGenAI, Type } from "@google/genai";
 import { getForecastForDate, getImageFromUnsplash } from "../utils/weatherAPi.service.js";
+import { Itinary } from "../models/itinerary.model.js";
 
 const ai = new GoogleGenAI({});
 
@@ -182,4 +184,53 @@ Return only valid JSON. Do not include any extra commentary or markdown. The JSO
   }
 });
 
-export { getItinaryResult };
+
+const saveItninary = asyncHandler(async (req, res) => {
+  const user = req.user
+
+  const {destination,start_date,end_date,intrests,travellers,budget} = req.body
+
+  
+
+  const itinary = await Itinary.create({
+        destination,
+        itinaryOwner : user._id,
+        start_date,
+        end_date,
+        intrests,
+        travellers,
+        budget
+       })
+
+
+  const uploadedItinary = await Itinary.findById(itinary._id)
+  if(!uploadedItinary){
+        throw new ApiError(500, "Something went wrong while uploading Itinary")
+    }
+    res.status(200)
+    .json(
+        new ApiResponse(
+            200,
+            uploadedItinary,
+            "Itinary saved Successfully"
+        )
+    )
+
+})
+
+
+const listAllItinary = asyncHandler(async (req, res) => {
+    const user = req.user
+    const itinaries = await Itinary.find({itinaryOwner : user._id}).sort({createdAt : -1})
+
+    res.status(200)
+    .json(
+        new ApiResponse(
+            200,
+            itinaries,
+            "Itinaries fetched Successfully"
+        )
+    )
+});
+
+export { getItinaryResult, saveItninary, listAllItinary};

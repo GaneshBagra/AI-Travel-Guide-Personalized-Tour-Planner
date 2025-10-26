@@ -201,11 +201,15 @@ const ItinerarySelection = () => {
           </div>
         )}
 
-        <div className="action-buttons">
+        <div className="action-buttons d-flex gap-3 justify-content-center">
           <button className="btn-secondary" onClick={() => navigate('/')}>
             Plan Another Trip
           </button>
+          <button className="btn btn-outline-success " onClick={() => navigate('/')}>
+            Save Itinary
+          </button>
         </div>
+        
       </div>
     </div>
   );
