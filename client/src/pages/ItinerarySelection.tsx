@@ -86,20 +86,24 @@ const ItinerarySelection = () => {
             <p className="loading-subtitle">Our AI is analyzing the best places, weather, and experiences for your trip...</p>
             <div className="loading-steps">
               <div className="step active">
-                <span className="step-icon">🌍</span>
-                <span className="step-text">Finding destinations</span>
+                <span className="step-icon">🤔</span>
+                <span className="step-text">Analyzing your destination preferences...</span>
+              </div>
+              <div className="step active">
+                <span className="step-icon">📅</span>
+                <span className="step-text">Calculating optimal day-by-day schedule...</span>
               </div>
               <div className="step active">
                 <span className="step-icon">🌤️</span>
-                <span className="step-text">Checking weather</span>
+                <span className="step-text">Fetching weather forecasts...</span>
               </div>
-              <div className="step active">
+              <div className="step-active">
                 <span className="step-icon">📸</span>
-                <span className="step-text">Gathering images</span>
+                <span className="step-text">Finding beautiful destination images...</span>
               </div>
               <div className="step">
                 <span className="step-icon">✨</span>
-                <span className="step-text">Finalizing itinerary</span>
+                <span className="step-text">Finalizing your perfect itinerary...</span>
               </div>
             </div>
           </div>
