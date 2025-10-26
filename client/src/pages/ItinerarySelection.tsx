@@ -158,6 +158,8 @@ const ItinerarySelection = () => {
 
                       <p className="activity-notes">{activity.notes}</p>
 
+                      <p className="activity-notes"><b>Best Time to Visit :</b>{activity.bestTimeToVisit}</p>
+
                       {activity.weather && activity.weather.condition && (
                         <div className="activity-weather">
                           <span className="icon">🌤️</span>

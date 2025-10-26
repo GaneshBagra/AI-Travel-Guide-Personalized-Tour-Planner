@@ -39,13 +39,6 @@ const getItinaryResult = asyncHandler(async (req, res) => {
  
 
 
-
-
-  // Set headers for SSE
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-
   try {
     const aiResponse = await ai.models.generateContent({
       model: "gemini-2.5-pro",
@@ -88,6 +81,10 @@ Return only valid JSON. Do not include any extra commentary or markdown. The JSO
                         time: { 
                           type: Type.STRING,
                           description: "Time of day (e.g., Morning, 9:00 AM)"
+                        },
+                        bestTimeToVisit: { 
+                          type: Type.STRING,
+                          description: "Best time to visit the place/attraction (e.g., 'Early morning to avoid crowds')"
                         },
                         placeName: { 
                           type: Type.STRING,

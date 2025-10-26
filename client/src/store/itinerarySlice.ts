@@ -9,6 +9,7 @@ interface Activity {
   PublicImageURL?: string;
   weather?: any;
   image?: string | null;
+ bestTimeToVisit?: string; 
 }
 
 interface Day {
