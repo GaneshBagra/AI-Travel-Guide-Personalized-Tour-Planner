@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../store/store';
 import { generateItinerary } from '../store/itinerarySlice';
 import { setFormData } from '../store/formSlice';
 import '../styles/Home.css';
@@ -10,6 +10,19 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [formErrors, setFormErrors] = useState<string>('');
+  
+  // Get stored form data from Redux
+  const storedFormData = useSelector((state: RootState) => state.form.formData);
+  
+  // State for destination only
+  const [destination, setDestination] = useState('');
+
+  // Update destination when stored form data changes
+  useEffect(() => {
+    if (storedFormData?.destination) {
+      setDestination(storedFormData.destination);
+    }
+  }, [storedFormData]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,6 +99,8 @@ const Home = () => {
                   name="destination"
                   placeholder="Where do you want to go?"
                   className="form-control"
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
                   required
                 />
               </div>

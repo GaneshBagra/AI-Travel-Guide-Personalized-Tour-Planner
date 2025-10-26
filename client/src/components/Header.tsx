@@ -32,6 +32,11 @@ const Header = () => {
             <span className="brand-icon">✈️</span>
             <span className="brand-name">GradGuide</span>
           </Link>
+          <nav className="nav-menu">
+            <Link to="/suggested-trips" className="nav-link">
+              🌍 Trending Destinations
+            </Link>
+          </nav>
           <div className="auth-buttons">
             {isAuthenticated && user ? (
               <>

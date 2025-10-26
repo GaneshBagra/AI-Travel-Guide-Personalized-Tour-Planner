@@ -5,6 +5,7 @@ import ItinerarySelection from './pages/ItinerarySelection';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import SavedItineraries from './pages/SavedItineraries';
+import SuggestedTrips from './pages/SuggestedTrips';
 import './App.css';
 
 function AppContent() {
@@ -22,6 +23,7 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/saved-itineraries" element={<SavedItineraries />} />
+          <Route path="/suggested-trips" element={<SuggestedTrips />} />
         </Routes>
       </main>
     </div>

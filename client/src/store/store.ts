@@ -3,6 +3,7 @@ import itineraryReducer from './itinerarySlice';
 import authReducer from './authSlice';
 import formReducer from './formSlice';
 import savedItinerariesReducer from './savedItinerariesSlice';
+import suggestedTripsReducer from './suggestedTripsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     auth: authReducer,
     form: formReducer,
     savedItineraries: savedItinerariesReducer,
+    suggestedTrips: suggestedTripsReducer,
   },
 });
 
