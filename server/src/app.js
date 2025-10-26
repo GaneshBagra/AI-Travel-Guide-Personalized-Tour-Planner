@@ -23,6 +23,10 @@ app.use(express.static("public"))
 
 // routes import
 
+import  aiRouter  from "./routes/ai.routes.js";
+
+
 // routes declaration
+app.use("/api/v1/ai", aiRouter);
 
 export  {app}
